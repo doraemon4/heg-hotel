@@ -1,10 +1,12 @@
-# 忽略所有 .log 文件
-*.log
-
+*/target/
+/target/
+*.project
+.settings
+*.classpath
+*.idea
 *.iml
-
-target/
-
-.idea
-
-src/test/
+*.class
+/idea/
+.idea/
+workspace.xml
+/static-analysis/
