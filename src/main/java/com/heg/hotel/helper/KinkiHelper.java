@@ -1,5 +1,6 @@
 package com.heg.hotel.helper;
 
+import com.alibaba.fastjson.JSON;
 import com.heg.hotel.helper.request.Kinki.RatePlanAllotEnvelope;
 import com.heg.hotel.helper.response.Kinki.RatePlanAllotRespEnvelope;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class KinkiHelper {
             if(response.isSuccessful()) {
                 String result = response.body().string();
                 RatePlanAllotRespEnvelope ratePlanAllotRespEnvelope = persister.read(RatePlanAllotRespEnvelope.class,result);
-                log.info("result:{}",result);
+                log.info("result:{},json序列化信息:{}",result, JSON.toJSON(ratePlanAllotRespEnvelope));
             }
         } catch (Exception e) {
             log.error(e.getMessage());
