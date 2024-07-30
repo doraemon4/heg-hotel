@@ -37,11 +37,11 @@ public class PlatformController {
     @RequestMapping("ratePlan")
     public String getRatePlan(){
         RatePlanAllotEnvelope.HotelRef hotelRef = new RatePlanAllotEnvelope.HotelRef();
-        hotelRef.setHotelCode("2610104");
-        hotelRef.setRatePlanCode("000403002610104017");
+        hotelRef.setHotelCode("0010018");
+        hotelRef.setRatePlanCode("000111010010018051");
         RatePlanAllotEnvelope.SearchDateRange searchDateRange = new RatePlanAllotEnvelope.SearchDateRange();
-        searchDateRange.setStart("2020-01-01");
-        searchDateRange.setEnd("2020-01-31");
+        searchDateRange.setStart("2024-08-01");
+        searchDateRange.setEnd("2024-08-31");
         RatePlanAllotEnvelope.AllotRequestSegment allotRequestSegment = new RatePlanAllotEnvelope.AllotRequestSegment();
         allotRequestSegment.setHotelRef(hotelRef);
         allotRequestSegment.setSearchDateRange(searchDateRange);
@@ -53,7 +53,7 @@ public class PlatformController {
         PosInfo posInfo = new PosInfo();
         PosInfo.SourceInfo sourceInfo = new PosInfo.SourceInfo();
         sourceInfo.setRequestorID(PosInfo.RequestorID.builder()
-                .ID(config.getId())
+                .id(config.getId())
                 .type("5").password(config.getPassword()).build());
         posInfo.setSourceInfo(sourceInfo);
         ratePlanAllotReq.setPosInfo(posInfo);

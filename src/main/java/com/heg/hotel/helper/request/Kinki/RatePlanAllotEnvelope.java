@@ -6,7 +6,7 @@ import org.simpleframework.xml.*;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description:  查询每日房量
  * @Version: 1.8
  * @Author: jack
  * @Created: 2024/7/26 14:18

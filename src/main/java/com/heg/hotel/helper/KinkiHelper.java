@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 /**
  * @Description: KOBS系统对接
  * @Version: 1.8
@@ -45,6 +48,17 @@ public class KinkiHelper {
                 String result = response.body().string();
                 RatePlanAllotRespEnvelope ratePlanAllotRespEnvelope = persister.read(RatePlanAllotRespEnvelope.class,result);
                 log.info("result:{},json序列化信息:{}",result, JSON.toJSON(ratePlanAllotRespEnvelope));
+                if(!Objects.isNull(ratePlanAllotRespEnvelope)){
+                    RatePlanAllotRespEnvelope.ErrorInfo errorInfo = ratePlanAllotRespEnvelope.getBody()
+                            .getRatePlanAllotResp().getErrorInfo();
+                    if(!Objects.isNull(errorInfo)){
+                        String errorMessage = errorInfo.getErrorMessages().stream().map(RatePlanAllotRespEnvelope.ErrorMessage::getMessage)
+                                .collect(Collectors.joining(";"));
+                    }else{
+                        //TODO
+                    }
+
+                }
             }
         } catch (Exception e) {
             log.error(e.getMessage());

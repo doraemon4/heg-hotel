@@ -33,7 +33,7 @@ public class PosInfo {
         private String type;
 
         @Attribute(name = "ID")
-        private String ID;
+        private String id = "5";
 
         @Attribute(name = "MessagePassword")
         private String password;
