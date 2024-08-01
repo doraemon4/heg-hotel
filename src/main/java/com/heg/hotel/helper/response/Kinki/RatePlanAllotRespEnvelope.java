@@ -42,22 +42,6 @@ public class RatePlanAllotRespEnvelope {
     }
 
     @Data
-    public static class ErrorInfo{
-        @ElementList(entry = "Error",type = ErrorMessage.class, inline = true, required = false)
-        private List<ErrorMessage> errorMessages;
-    }
-
-    /**接口请求错误提示异常信息*/
-    @Data
-    public static class ErrorMessage{
-        @Attribute(name = "Message")
-        private String message;
-
-        @Attribute(name = "Code")
-        private String code;
-    }
-
-    @Data
     public static class AllotReposeSegmentInfo{
         @ElementList(entry = "AllotReposeSegment",type = AllotReposeSegment.class, inline = true, required = false)
         private List<AllotReposeSegment> allotReposeSegments;

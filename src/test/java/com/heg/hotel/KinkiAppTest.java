@@ -26,7 +26,7 @@ public class KinkiAppTest {
     private KinkiConfig config;
 
     @Test
-    public void getRatePlan(){
+    public void getRatePlanAllot(){
         RatePlanAllotEnvelope.HotelRef hotelRef = new RatePlanAllotEnvelope.HotelRef();
         hotelRef.setHotelCode("000403002610104017");
         hotelRef.setRatePlanCode("2610104");
@@ -44,7 +44,7 @@ public class KinkiAppTest {
         PosInfo posInfo = new PosInfo();
         PosInfo.SourceInfo sourceInfo = new PosInfo.SourceInfo();
         sourceInfo.setRequestorID(PosInfo.RequestorID.builder()
-                .ID(config.getId())
+                .id(config.getId())
                 .type("5").password(config.getPassword()).build());
         posInfo.setSourceInfo(sourceInfo);
         ratePlanAllotReq.setPosInfo(posInfo);
@@ -53,6 +53,6 @@ public class KinkiAppTest {
         body.setRatePlanAllotReq(ratePlanAllotReq);
         envelope.setBody(body);
 
-        kinkiHelper.getRatePlan(envelope);
+        kinkiHelper.getRatePlanAllot(envelope);
     }
 }

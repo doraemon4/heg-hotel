@@ -18,7 +18,7 @@ import java.util.List;
         @Namespace(reference = "http://www.w3.org/2001/XMLSchema", prefix = "xsd"),
         @Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/", prefix = "soap")
 })
-public class HotelReservationEnvelop {
+public class HotelReservationEnvelope {
     @Element(name = "soap:Body",required = false)
     private HotelReservationBody body;
 
@@ -43,7 +43,7 @@ public class HotelReservationEnvelop {
      */
     @Data
     public static class HotelReservationInfo{
-        @ElementList(name = "HotelReservation",inline = true, required = false,type = HotelReservation.class)
+        @ElementList(entry = "HotelReservation",inline = true, required = false,type = HotelReservation.class)
         private List<HotelReservation> hotelReservations;
     }
 

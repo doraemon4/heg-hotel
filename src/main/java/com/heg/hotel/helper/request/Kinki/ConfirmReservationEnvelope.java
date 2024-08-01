@@ -18,7 +18,7 @@ import java.util.List;
         @Namespace(reference = "http://www.w3.org/2001/XMLSchema", prefix = "xsd"),
         @Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/", prefix = "soap")
 })
-public class ConfirmReservationEnvelop {
+public class ConfirmReservationEnvelope {
     @Element(name = "soap:Body",required = false)
     private ConfirmReservationBody body;
 
@@ -53,7 +53,7 @@ public class ConfirmReservationEnvelop {
     @Data
     public static class ReserveConfirmNo{
         @Attribute(name = "ResID")
-        private String no;   //供应商订单号
+        private String resNo;   //供应商订单号
 
         @Attribute(name = "ReserveNo")
         private String reserveNo;   //分销商订单号

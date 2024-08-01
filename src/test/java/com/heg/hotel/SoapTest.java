@@ -2,12 +2,14 @@ package com.heg.hotel;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.heg.hotel.helper.request.Kinki.CancelEnvelope;
 import com.heg.hotel.helper.request.Kinki.PosInfo;
 import com.heg.hotel.helper.request.Kinki.RatePlanAllotEnvelope;
 import com.heg.hotel.helper.response.Kinki.RatePlanAllotRespEnvelope;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @Description:
@@ -17,23 +19,11 @@ import java.io.File;
  */
 public class SoapTest {
     public static void main(String[] args) throws Exception {
-        String xml="<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
-                "   <soap:Body class=\"com.heg.hotel.helper.request.Kinki.RatePlanAllotEnvelope\">\n" +
-                "      <RatePlanAllotRQ xmlns=\"http://gv.knt.co.jp/\">\n" +
-                "         <POS>\n" +
-                "            <Source>\n" +
-                "               <RequestorID Type=\"5\" ID=\"5\" MessagePassword=\"123456\"/>\n" +
-                "            </Source>\n" +
-                "         </POS>\n" +
-                "         <AllotRequestSegments>\n" +
-                "            <AllotRequestSegment Number=\"1\">\n" +
-                "               <SearchDateRange Start=\"2020-01-01\" End=\"2020-01-31\"/>\n" +
-                "               <HotelRef RatePlanCode=\"2610104\" HotelCode=\"000403002610104017\"/>\n" +
-                "            </AllotRequestSegment>\n" +
-                "         </AllotRequestSegments>\n" +
-                "      </RatePlanAllotRQ>\n" +
-                "   </soap:Body>\n" +
-                "</soap:Envelope>";
+        testCancel();
+    }
+
+    public void testRatePlanAllot() throws Exception {
+        String xml;
 
         Persister persister = new Persister();//实例化一个Persister
         //Envelope envelope = persister.read(Envelope.class,xml);
@@ -55,7 +45,7 @@ public class SoapTest {
         ratePlanAllotReq.setAllotRequestSegmentInfo(allotRequestSegmentInfo);
         PosInfo posInfo = new PosInfo();
         PosInfo.SourceInfo sourceInfo = new PosInfo.SourceInfo();
-        sourceInfo.setRequestorID(PosInfo.RequestorID.builder().ID("5").type("5").password("123456").build());
+        sourceInfo.setRequestorID(PosInfo.RequestorID.builder().id("5").type("5").password("123456").build());
         posInfo.setSourceInfo(sourceInfo);
         ratePlanAllotReq.setPosInfo(posInfo);
         RatePlanAllotEnvelope envelope = new RatePlanAllotEnvelope();
@@ -89,6 +79,29 @@ public class SoapTest {
                 "</soap:Envelope>";
         ratePlanAllotRespEnvelope =  persister.read(RatePlanAllotRespEnvelope.class,xml);
         System.out.println(JSON.toJSON(ratePlanAllotRespEnvelope));
+    }
 
+    public static void testCancel() throws Exception {
+        Persister persister = new Persister();
+        CancelEnvelope envelop = new CancelEnvelope();
+        CancelEnvelope.CancelReservationBody body = new CancelEnvelope.CancelReservationBody();
+        CancelEnvelope.CancelReservationReq cancelReservationReq = new CancelEnvelope.CancelReservationReq();
+        CancelEnvelope.UniqueID uniqueID = new CancelEnvelope.UniqueID();
+        uniqueID.setId("test001");
+        CancelEnvelope.UniqueID uniqueID2 = new CancelEnvelope.UniqueID();
+        uniqueID2.setId("test002");
+        List<CancelEnvelope.UniqueID> uniqueIDs = Lists.newArrayList();
+        uniqueIDs.add(uniqueID);
+        uniqueIDs.add(uniqueID2);
+        PosInfo posInfo = new PosInfo();
+        PosInfo.SourceInfo sourceInfo = new PosInfo.SourceInfo();
+        sourceInfo.setRequestorID(PosInfo.RequestorID.builder().id("5").type("5").password("123456").build());
+        posInfo.setSourceInfo(sourceInfo);
+        cancelReservationReq.setPosInfo(posInfo);
+        cancelReservationReq.setUniqueIDS(uniqueIDs);
+        body.setCancelReservationReq(cancelReservationReq);
+        envelop.setBody(body);
+
+        persister.write(envelop,new File("C:\\Users\\jack\\Desktop\\test.xml"));
     }
 }

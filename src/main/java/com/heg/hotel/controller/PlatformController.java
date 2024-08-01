@@ -34,8 +34,8 @@ public class PlatformController {
         return "SUCCESS";
     }
 
-    @RequestMapping("ratePlan")
-    public String getRatePlan(){
+    @RequestMapping("ratePlanAllot")
+    public String getRatePlanAllot(){
         RatePlanAllotEnvelope.HotelRef hotelRef = new RatePlanAllotEnvelope.HotelRef();
         hotelRef.setHotelCode("0010018");
         hotelRef.setRatePlanCode("000111010010018051");
@@ -62,7 +62,7 @@ public class PlatformController {
         body.setRatePlanAllotReq(ratePlanAllotReq);
         envelope.setBody(body);
 
-        kinkiHelper.getRatePlan(envelope);
+        kinkiHelper.getRatePlanAllot(envelope);
         return "SUCCESS";
     }
 }
