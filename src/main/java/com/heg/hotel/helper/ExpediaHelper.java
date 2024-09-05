@@ -51,18 +51,18 @@ public class ExpediaHelper {
                 .build();
         GetRegionsOperation getRegionsOperation = new GetRegionsOperation(regionsOperationParams);
         List<List<Region>> pages = new ArrayList<>();
-        /**
-        rapidClient.getPaginator(getRegionsOperation).forEachRemaining(page -> pages.add(page.getData()));
-        System.out.println(pages);
-         **/
 
-        ResponsePaginator<List<Region>> responsePaginator = rapidClient.getPaginator(new GetRegionsOperation(
+        rapidClient.getPaginator(getRegionsOperation).forEachRemaining(page -> pages.add(page.getData()));
+        System.out.println("分页数据:"+pages);
+
+
+       /* ResponsePaginator<List<Region>> responsePaginator = rapidClient.getPaginator(new GetRegionsOperation(
                 regionsOperationParams));
         log.info("Paginator total results count: {}", responsePaginator.getPaginationTotalResults());
 
         responsePaginator.forEachRemaining(page -> {
             pages.add(page.getData());
-        });
+        });*/
         return pages;
     }
 
@@ -70,24 +70,24 @@ public class ExpediaHelper {
      * get hotel-room-rate
      * @return
      */
-    public Response<Map<String, PropertyContent>> getPropertyContent(){
+    public ResponsePaginator<Map<String,PropertyContent>> getPropertyContent(String countryCode){
         GetPropertyContentOperationParams params = GetPropertyContentOperationParams.builder()
                 .language("en-US")
                 .supplySource("expedia")
-                .countryCode(Arrays.asList("US"))
-                .propertyRatingMin("2.0")
-                .propertyRatingMax("2.9")
+                .countryCode(Arrays.asList(countryCode))
+                //.propertyRatingMin(ratingMin)
+                //.propertyRatingMax(ratingMax)
                 .build();
         GetPropertyContentOperation operation = new GetPropertyContentOperation(params);
 
-        Response<Map<String, PropertyContent>> response = rapidClient.execute(operation);
+        /*Response<Map<String, PropertyContent>> response = rapidClient.execute(operation);
         System.out.println(response);
         System.out.println("不分页查询的记录数："+response.getData().size());
-        System.out.println("============================================================================");
+        System.out.println("============================================================================");*/
         ResponsePaginator<Map<String,PropertyContent>> responsePaginator = rapidClient.getPaginator(operation);
         System.out.println("总记录数:"+responsePaginator.getPaginationTotalResults());
-        List<Map<String,PropertyContent>> pages = Lists.newArrayList();
-        return null;
+
+        return responsePaginator;
     }
 
     /**

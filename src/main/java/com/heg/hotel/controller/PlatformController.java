@@ -6,8 +6,10 @@ import com.heg.hotel.helper.ExpediaHelper;
 import com.heg.hotel.helper.KinkiHelper;
 import com.heg.hotel.helper.request.Kinki.PosInfo;
 import com.heg.hotel.helper.request.Kinki.RatePlanAllotEnvelope;
+import com.heg.hotel.service.ExpediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -28,10 +30,18 @@ public class PlatformController {
     @Autowired
     private KinkiConfig config;
 
+    @Autowired
+    private ExpediaService expediaService;
+
     @RequestMapping("region")
     public String queryRegion(){
         expediaHelper.getRegions();
         return "SUCCESS";
+    }
+
+    @RequestMapping("expedia/hotel/{countryCode}")
+    public String pullHotel(@PathVariable String countryCode){
+        return expediaService.pullHotel(countryCode);
     }
 
     @RequestMapping("ratePlanAllot")
