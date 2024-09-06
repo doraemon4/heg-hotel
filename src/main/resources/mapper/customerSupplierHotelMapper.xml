@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heg.hotel.infrastructure.dao.HotelMapper">
+    <select id="selectByCoordinate" parameterType="com.heg.hotel.infrastructure.entity.HotelPO"
+            resultType="com.heg.hotel.infrastructure.entity.HotelPO">
+        SELECT t.hotel_code,
+               t.hotel_name,
+               t.longitude,
+               t.latitude,
+               t.hotel_address,
+               t.phone,
+               t.provider_name
+        FROM t_supplier_hotel t
+        where ROUND(t.latitude, 5) = ROUND(#{latitude}, 5)
+            AND ROUND(t.longitude, 5) = ROUND(#{longitude}, 5) AND t.provider_name = 'expedia';
+    </select>
+</mapper>
